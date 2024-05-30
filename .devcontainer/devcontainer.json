@@ -1,0 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
+{
+	"name": "Go",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/go:1-1.22-bookworm",
+
+	"remoteUser": "vlad",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+			"username": "vlad",
+			"userUid": "501",
+			"userGid": "501"
+		},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/guiyomh/features/just:0": {},
+        "ghcr.io/devcontainers-contrib/features/starship:1": {},
+        "ghcr.io/rio/features/chezmoi:1": {}
+    },
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {
+                "workbench.colorTheme": "SynthWave '84",
+                "workbench.preferredDarkColorTheme": "SynthWave '84",
+				"workbench.preferredLightColorTheme": "Quiet Light",
+				"workbench.iconTheme": "material-icon-theme",
+
+				"git.enableSmartCommit": true,
+				"git.autofetch": true
+            },
+			"extensions": [
+                "golang.go",
+                "kokakiwi.vscode-just",
+                "RobbOwen.synthwave-vscode",
+				"PKief.material-icon-theme"
+			]
+		}
+	},
+
+    "postStartCommand": "just build",
+	"postCreateCommand": "go version"
+}
