@@ -6,18 +6,9 @@
 	"image": "mcr.microsoft.com/devcontainers/go:1-1.22-bookworm",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	//"features": {
-	//        "ghcr.io/devcontainers/features/common-utils:2": {
-	//		"username": "vlad",
-	//		"userUid": "501",
-	//		"userGid": "501"
-	//	},
-	//        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-	//        "ghcr.io/guiyomh/features/just:0": {},
-	//	"ghcr.io/wxw-matt/devcontainer-features/command_runner:0": {
-	//		"command1": "curl -fsSL https://starship.rs/install.sh | sh -s -- -y"
-	//	}
-	//},
+	"features": {
+		"ghcr.io/guiyomh/features/just:0": {},
+	},
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -30,17 +21,24 @@
 				"workbench.iconTheme": "material-icon-theme",
 
 				"git.enableSmartCommit": true,
-				"git.autofetch": true
+				"git.autofetch": true,
+
+				"go.toolsManagement.checkForUpdates": "local",
+                "go.useLanguageServer": true,
+                "go.gopath": "/go"
             },
 			"extensions": [
                 "golang.go",
+				"redhat.vscode-yaml",
                 "kokakiwi.vscode-just",
                 "RobbOwen.synthwave-vscode",
-				"PKief.material-icon-theme"
+				"PKief.material-icon-theme",
+				"eamodio.gitlens",
+				"stkb.rewrap"
 			]
 		}
 	},
 
     "postStartCommand": "just build",
-	"postCreateCommand": "go version"
+	"postCreateCommand": "go mod tidy"
 }
