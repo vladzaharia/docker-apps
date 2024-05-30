@@ -6,9 +6,9 @@
 	"image": "mcr.microsoft.com/devcontainers/go:1-1.22-bookworm",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	"features": {
-		"ghcr.io/guiyomh/features/just:0": {},
-	},
+	//"features": {
+	//	"ghcr.io/guiyomh/features/just:0": {},
+	//},
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -40,5 +40,5 @@
 	},
 
     "postStartCommand": "just build",
-	"postCreateCommand": "go mod tidy"
+    "postCreateCommand": "(sh -c \"$(curl --location https://taskfile.dev/install.sh)\" -- -d -b /usr/local/bin) && go mod tidy"
 }
