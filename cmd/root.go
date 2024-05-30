@@ -23,67 +23,113 @@ package cmd
 
 import (
 	"os"
+	"time"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/log"
+	"github.com/docker/cli/cli/command"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var debug bool
+
+func init() {
+	cobra.OnInitialize(initLog, initConfig)
+	setupPFlags()
+}
+
+func MakeCmd(cli command.Cli) *cobra.Command {
+	return rootCmd
+}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "docker apps",
+	Use:   "apps",
 	Short: "Manage Docker compose services at scale",
 	Long:  `docker-apps lets you manage Docker compose services at scale.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
-	}
-}
-
-func init() {
-	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
+// setupFlags sets up the persistent flags (across commands)
+func setupPFlags() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.docker-apps.yaml)")
 
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "whether to show debug log")
+	viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug"))
+}
+
+// initLog initializes the logging system
+func initLog() {
+	styles := log.DefaultStyles()
+
+	// Override timestamp formatting
+	log.SetTimeFormat(time.Kitchen)
+	styles.Timestamp = lipgloss.NewStyle().
+		Faint(true)
+
+	baseStyle := lipgloss.NewStyle().
+		Bold(true).
+		Foreground(lipgloss.Color("0"))
+
+	// Override the default error level style.
+	styles.Levels[log.FatalLevel] = lipgloss.NewStyle().
+		SetString("FTL").
+		Background(lipgloss.Color("134")).
+		Inherit(baseStyle)
+
+	// Override the default error level style.
+	styles.Levels[log.ErrorLevel] = lipgloss.NewStyle().
+		SetString("ERR").
+		Background(lipgloss.Color("204")).
+		Inherit(baseStyle)
+
+	// Override the default debug level style.
+	styles.Levels[log.WarnLevel] = lipgloss.NewStyle().
+		SetString("WRN").
+		Background(lipgloss.Color("192")).
+		Inherit(baseStyle)
+
+	// Override the default debug level style.
+	styles.Levels[log.InfoLevel] = lipgloss.NewStyle().
+		SetString("INF").
+		Background(lipgloss.Color("86")).
+		Inherit(baseStyle)
+
+	// Override the default debug level style.
+	styles.Levels[log.DebugLevel] = lipgloss.NewStyle().
+		SetString("DBG").
+		Background(lipgloss.Color("63")).
+		Inherit(baseStyle)
+
+	log.SetStyles(styles)
+
+	// Set log level
+	if viper.GetBool("debug") {
+		log.SetLevel(log.DebugLevel)
+		log.Debug("Set log level to debug!")
+	}
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	log.Debug("Initializing config...")
 	if cfgFile != "" {
-		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".docker-apps" (without extension).
 		viper.AddConfigPath(home)
+		viper.AddConfigPath(".")
+		viper.AddConfigPath("/etc/docker")
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".docker-apps")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	viper.AutomaticEnv()
 
-	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		log.Debugf("Using config file: %s", viper.ConfigFileUsed())
 	}

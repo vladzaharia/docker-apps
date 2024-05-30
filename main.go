@@ -21,8 +21,16 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/vladzaharia/docker-apps/cmd"
+import (
+	"github.com/docker/cli/cli-plugins/manager"
+	"github.com/docker/cli/cli-plugins/plugin"
+	"github.com/vladzaharia/docker-apps/cmd"
+)
 
 func main() {
-	cmd.Execute()
+	plugin.Run(cmd.MakeCmd, manager.Metadata{
+		SchemaVersion: "0.1.0",
+		Vendor:        "Vlad Zaharia",
+		Version:       "v0.0.1",
+	})
 }

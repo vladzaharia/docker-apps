@@ -12,15 +12,15 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(VersionCmd)
 }
 
-var versionCmd = &cobra.Command{
+var VersionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version numbers associated with this tool.",
-	Long:  `Print the version numbers associated with this tool.`,
+	Short: "Print the versions associated with this tool.",
+	Long:  `Print the versions associated with this tool.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("docker-apps:", "0.0.1")
+		fmt.Println("docker-apps:", "v0.0.1")
 
 		docker, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 		if err != nil {
