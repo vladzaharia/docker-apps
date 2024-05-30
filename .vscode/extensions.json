@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "golang.go",
+    "redhat.vscode-yaml",
+    "kokakiwi.vscode-just",
+    "DavidAnson.vscode-markdownlint",
+    "PKief.material-icon-theme",
+    "RobbOwen.synthwave-vscode",
+    "eamodio.gitlens",
+    "GitHub.vscode-pull-request-github",
+    "stkb.rewrap"
+  ]
+}
