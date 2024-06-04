@@ -15,23 +15,24 @@
 		// Configure properties specific to VS Code.
 		"vscode": {
 			"settings": {
-				"workbench.colorTheme": "SynthWave '84",
-				"workbench.preferredDarkColorTheme": "SynthWave '84",
+				"workbench.colorTheme": "Bearded Theme Surprising Blueberry",
+				"workbench.preferredDarkColorTheme": "Bearded Theme Surprising Blueberry",
 				"workbench.preferredLightColorTheme": "Quiet Light",
-				"workbench.iconTheme": "material-icon-theme",
+				"workbench.iconTheme": "bearded-icons",
 				"git.enableSmartCommit": true,
 				"git.autofetch": true,
 				"go.toolsManagement.checkForUpdates": "local",
 				"go.useLanguageServer": true,
-				"go.gopath": "/go"
+				"go.gopath": "/go",
+				"workbench.activityBar.location":"top"
 			},
 			"extensions": [
 				"golang.go",
 				"redhat.vscode-yaml",
 				"kokakiwi.vscode-just",
 				"DavidAnson.vscode-markdownlint",
-				"RobbOwen.synthwave-vscode",
-				"PKief.material-icon-theme",
+				"BeardedBear.beardedtheme",
+				"BeardedBear.beardedicons",
 				"eamodio.gitlens",
 				"stkb.rewrap",
 				"ms-vscode-remote.remote-containers"

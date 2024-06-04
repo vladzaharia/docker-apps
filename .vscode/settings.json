@@ -1,12 +1,13 @@
 {
-  "workbench.colorTheme": "SynthWave '84",
-  "workbench.preferredDarkColorTheme": "SynthWave '84",
+  "workbench.colorTheme": "Bearded Theme Stained Blue",
+  "workbench.preferredDarkColorTheme": "Bearded Theme Surprising Blueberry",
   "workbench.preferredLightColorTheme": "Quiet Light",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "bearded-icons",
 
   "editor.fontFamily": "'MonoLisa Nerd Font', MonoLisa, Menlo, Monaco, 'Courier New', monospace",
 
   "git.enableSmartCommit": true,
   "git.autofetch": true,
   "git.confirmSync": false,
+  "workbench.activityBar.location":"top"
 }
